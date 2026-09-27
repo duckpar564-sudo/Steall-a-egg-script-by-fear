@@ -1,0 +1,355 @@
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "FearScripts"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = (gethui and gethui()) or game:GetService("CoreGui")
+
+-- ===== JANELA PRINCIPAL =====
+local Frame = Instance.new("Frame")
+Frame.Name = "MainFrame"
+Frame.Size = UDim2.new(0, 280, 0, 380)
+Frame.Position = UDim2.new(0, 20, 0.5, -190)
+Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+Frame.BorderSizePixel = 0
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
+
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.Parent = Frame
+
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Color = Color3.fromRGB(60, 60, 90)
+MainStroke.Thickness = 1
+MainStroke.Parent = Frame
+
+-- Sombra
+local Shadow = Instance.new("ImageLabel")
+Shadow.Name = "Shadow"
+Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
+Shadow.BackgroundTransparency = 1
+Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
+Shadow.Size = UDim2.new(1, 30, 1, 30)
+Shadow.ZIndex = 0
+Shadow.Image = "rbxassetid://5028855077"
+Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
+Shadow.ImageTransparency = 0.5
+Shadow.Parent = Frame
+
+-- ===== CABEÇALHO =====
+local Header = Instance.new("Frame")
+Header.Name = "Header"
+Header.Size = UDim2.new(1, 0, 0, 50)
+Header.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+Header.BorderSizePixel = 0
+Header.Active = true
+Header.Parent = Frame
+
+local HeaderCorner = Instance.new("UICorner")
+HeaderCorner.CornerRadius = UDim.new(0, 12)
+HeaderCorner.Parent = Header
+
+local HeaderFix = Instance.new("Frame")
+HeaderFix.Size = UDim2.new(1, 0, 0, 12)
+HeaderFix.Position = UDim2.new(0, 0, 1, -12)
+HeaderFix.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+HeaderFix.BorderSizePixel = 0
+HeaderFix.Parent = Header
+
+local Gradient = Instance.new("UIGradient")
+Gradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 60, 60)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(120, 0, 0)),
+})
+Gradient.Rotation = 45
+Gradient.Parent = Header
+
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -80, 0, 28)
+Title.Position = UDim2.new(0, 15, 0, 6)
+Title.BackgroundTransparency = 1
+Title.Text = "FEAR SCRIPTS"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = Header
+
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Size = UDim2.new(1, -80, 0, 14)
+Subtitle.Position = UDim2.new(0, 15, 0, 30)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "Script Hub • v2.0"
+Subtitle.TextColor3 = Color3.fromRGB(220, 200, 200)
+Subtitle.Font = Enum.Font.Gotham
+Subtitle.TextSize = 11
+Subtitle.TextXAlignment = Enum.TextXAlignment.Left
+Subtitle.Parent = Header
+
+-- ===== BOLINHA MINIMIZADA (criada antes, escondida) =====
+local MinimizedBall = Instance.new("TextButton")
+MinimizedBall.Name = "MinimizedBall"
+MinimizedBall.Size = UDim2.new(0, 60, 0, 60)
+MinimizedBall.Position = UDim2.new(0, 20, 0.5, -30)
+MinimizedBall.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+MinimizedBall.Text = "F"
+MinimizedBall.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizedBall.Font = Enum.Font.GothamBold
+MinimizedBall.TextSize = 28
+MinimizedBall.BorderSizePixel = 0
+MinimizedBall.Visible = false
+MinimizedBall.Active = true
+MinimizedBall.Draggable = true
+MinimizedBall.Parent = ScreenGui
+
+local BallCorner = Instance.new("UICorner")
+BallCorner.CornerRadius = UDim.new(1, 0)
+BallCorner.Parent = MinimizedBall
+
+local BallStroke = Instance.new("UIStroke")
+BallStroke.Color = Color3.fromRGB(255, 150, 150)
+BallStroke.Thickness = 2
+BallStroke.Parent = MinimizedBall
+
+-- Hover da bolinha
+MinimizedBall.MouseEnter:Connect(function()
+    MinimizedBall.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+end)
+MinimizedBall.MouseLeave:Connect(function()
+    MinimizedBall.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+end)
+
+-- ===== BOTÃO FECHAR =====
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 26, 0, 26)
+CloseBtn.Position = UDim2.new(1, -34, 0, 12)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.TextSize = 18
+CloseBtn.BorderSizePixel = 0
+CloseBtn.Parent = Header
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(1, 0)
+CloseCorner.Parent = CloseBtn
+
+CloseBtn.MouseEnter:Connect(function()
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 120, 120)
+end)
+CloseBtn.MouseLeave:Connect(function()
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+end)
+
+-- Fechar: destrói tudo imediatamente
+CloseBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- ===== BOTÃO MINIMIZAR =====
+local MinBtn = Instance.new("TextButton")
+MinBtn.Size = UDim2.new(0, 26, 0, 26)
+MinBtn.Position = UDim2.new(1, -66, 0, 12)
+MinBtn.BackgroundColor3 = Color3.fromRGB(255, 180, 60)
+MinBtn.Text = "–"
+MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinBtn.Font = Enum.Font.GothamBold
+MinBtn.TextSize = 18
+MinBtn.BorderSizePixel = 0
+MinBtn.Parent = Header
+
+local MinCorner = Instance.new("UICorner")
+MinCorner.CornerRadius = UDim.new(1, 0)
+MinCorner.Parent = MinBtn
+
+-- Minimizar: esconde o painel e mostra a bolinha
+MinBtn.MouseButton1Click:Connect(function()
+    Frame.Visible = false
+    MinimizedBall.Visible = true
+end)
+
+-- Restaurar: clica na bolinha e volta o painel
+MinimizedBall.MouseButton1Click:Connect(function()
+    MinimizedBall.Visible = false
+    Frame.Visible = true
+end)
+
+-- ===== CONTAINER DE BOTÕES =====
+local ButtonHolder = Instance.new("Frame")
+ButtonHolder.Name = "ButtonHolder"
+ButtonHolder.Size = UDim2.new(1, -20, 1, -135)
+ButtonHolder.Position = UDim2.new(0, 10, 0, 60)
+ButtonHolder.BackgroundTransparency = 1
+ButtonHolder.Parent = Frame
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Padding = UDim.new(0, 8)
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Parent = ButtonHolder
+
+-- ===== FUNÇÃO DE CRIAR BOTÃO =====
+local function makeBtn(name, scriptUrl, order)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, 0, 0, 55)
+    btn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    btn.Text = ""
+    btn.AutoButtonColor = false
+    btn.BorderSizePixel = 0
+    btn.LayoutOrder = order
+    btn.Parent = ButtonHolder
+
+    local c = Instance.new("UICorner")
+    c.CornerRadius = UDim.new(0, 8)
+    c.Parent = btn
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(55, 55, 80)
+    stroke.Thickness = 1
+    stroke.Parent = btn
+
+    local accent = Instance.new("Frame")
+    accent.Size = UDim2.new(0, 4, 1, -16)
+    accent.Position = UDim2.new(0, 8, 0, 8)
+    accent.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+    accent.BorderSizePixel = 0
+    accent.Parent = btn
+
+    local accentCorner = Instance.new("UICorner")
+    accentCorner.CornerRadius = UDim.new(1, 0)
+    accentCorner.Parent = accent
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, -50, 0, 20)
+    label.Position = UDim2.new(0, 22, 0, 10)
+    label.BackgroundTransparency = 1
+    label.Text = name
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.Font = Enum.Font.GothamBold
+    label.TextSize = 14
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.Parent = btn
+
+    local sub = Instance.new("TextLabel")
+    sub.Size = UDim2.new(1, -50, 0, 14)
+    sub.Position = UDim2.new(0, 22, 0, 30)
+    sub.BackgroundTransparency = 1
+    sub.Text = "Clique para executar"
+    sub.TextColor3 = Color3.fromRGB(150, 150, 170)
+    sub.Font = Enum.Font.Gotham
+    sub.TextSize = 11
+    sub.TextXAlignment = Enum.TextXAlignment.Left
+    sub.Parent = btn
+
+    btn.MouseEnter:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(50, 50, 75)
+        stroke.Color = Color3.fromRGB(255, 60, 60)
+    end)
+    btn.MouseLeave:Connect(function()
+        btn.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+        stroke.Color = Color3.fromRGB(55, 55, 80)
+    end)
+
+    btn.MouseButton1Down:Connect(function()
+        btn.Size = UDim2.new(1, -6, 0, 52)
+    end)
+    btn.MouseButton1Up:Connect(function()
+        btn.Size = UDim2.new(1, 0, 0, 55)
+    end)
+
+    btn.MouseButton1Click:Connect(function()
+        sub.Text = "Carregando..."
+        sub.TextColor3 = Color3.fromRGB(255, 150, 150)
+        task.spawn(function()
+            local ok = pcall(function()
+                loadstring(game:HttpGet(scriptUrl))()
+            end)
+            if ok then
+                sub.Text = "✓ Executado"
+                sub.TextColor3 = Color3.fromRGB(100, 255, 150)
+            else
+                sub.Text = "✗ Erro ao carregar"
+                sub.TextColor3 = Color3.fromRGB(255, 100, 100)
+            end
+            task.wait(2)
+            sub.Text = "Clique para executar"
+            sub.TextColor3 = Color3.fromRGB(150, 150, 170)
+        end)
+    end)
+end
+
+-- ===== BOTÕES =====
+makeBtn("Chilli Hub", "https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua", 1)
+makeBtn("Lennon Farm", "https://raw.githubusercontent.com/lennonxscripts/lennonfarmv2/refs/heads/main/stealanegg", 2)
+makeBtn("Miranda AFK", "https://raw.githubusercontent.com/miirandahub/loader/refs/heads/main/afkk", 3)
+
+-- ===== BOTÃO DO DISCORD =====
+local DiscordBtn = Instance.new("TextButton")
+DiscordBtn.Size = UDim2.new(1, -20, 0, 40)
+DiscordBtn.Position = UDim2.new(0, 10, 1, -75)
+DiscordBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+DiscordBtn.Text = "💬  Entrar no Discord"
+DiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DiscordBtn.Font = Enum.Font.GothamBold
+DiscordBtn.TextSize = 14
+DiscordBtn.BorderSizePixel = 0
+DiscordBtn.Parent = Frame
+
+local DiscordCorner = Instance.new("UICorner")
+DiscordCorner.CornerRadius = UDim.new(0, 8)
+DiscordCorner.Parent = DiscordBtn
+
+DiscordBtn.MouseEnter:Connect(function()
+    DiscordBtn.BackgroundColor3 = Color3.fromRGB(110, 122, 255)
+end)
+DiscordBtn.MouseLeave:Connect(function()
+    DiscordBtn.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+end)
+
+-- ===== AVISO GRANDE (notificação central) =====
+local function showNotification(text)
+    local notif = Instance.new("Frame")
+    notif.Size = UDim2.new(0, 420, 0, 160)
+    notif.Position = UDim2.new(0.5, -210, 0.5, -80)
+    notif.BackgroundColor3 = Color3.fromRGB(25, 25, 40)
+    notif.BorderSizePixel = 0
+    notif.ZIndex = 100
+    notif.Parent = ScreenGui
+
+    local nCorner = Instance.new("UICorner")
+    nCorner.CornerRadius = UDim.new(0, 14)
+    nCorner.Parent = notif
+
+    local nStroke = Instance.new("UIStroke")
+    nStroke.Color = Color3.fromRGB(88, 101, 242)
+    nStroke.Thickness = 2
+    nStroke.Parent = notif
+
+    local nTitle = Instance.new("TextLabel")
+    nTitle.Size = UDim2.new(1, -20, 0, 40)
+    nTitle.Position = UDim2.new(0, 10, 0, 15)
+    nTitle.BackgroundTransparency = 1
+    nTitle.Text = "✓  LINK COPIADO!"
+    nTitle.TextColor3 = Color3.fromRGB(100, 255, 150)
+    nTitle.Font = Enum.Font.GothamBold
+    nTitle.TextSize = 22
+    nTitle.ZIndex = 101
+    nTitle.Parent = notif
+
+    local nMsg = Instance.new("TextLabel")
+    nMsg.Size = UDim2.new(1, -20, 0, 60)
+    nMsg.Position = UDim2.new(0, 10, 0, 60)
+    nMsg.BackgroundTransparency = 1
+    nMsg.Text = text
+    nMsg.TextColor3 = Color3.fromRGB(230, 230, 240)
+    nMsg.Font = Enum.Font.Gotham
+    nMsg.TextSize = 14
+    nMsg.TextWrapped = true
+    nMsg.ZIndex = 101
+    nMsg.Parent = notif
+
+    local nHint = Instance.new("TextLabel")
+    nHint.Size = UDim2.new(1, -20, 0, 20)
+    nHint.Position = UDim2.new(0, 10, 1
